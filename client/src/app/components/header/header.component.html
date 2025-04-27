@@ -1,0 +1,57 @@
+<header
+  class="bg-(--primary-color) text-white px-4 py-3 fixed top-0 left-0 right-0"
+>
+  <nav class="flex justify-between items-center">
+    <div class="text-2xl font-bold">Review System</div>
+
+    <ul class="hidden md:flex md:items-center space-x-8">
+      <li>
+        <button
+          class="cursor-pointer font-bold tracking-wider bg-(--secondary-color) px-4 py-2 rounded-2xl"
+          (click)="handleAddEmployee()"
+        >
+          Add Employee
+        </button>
+      </li>
+      <li class="grow">
+        <span class="font-semibold tracking-wider">{{
+          username | titlecase
+        }}</span>
+      </li>
+      <li>
+        <button
+          class="cursor-pointer bg-red-500 px-4 py-2 rounded-2xl font-bold"
+          (click)="handleLogout()"
+        >
+          Logout
+        </button>
+      </li>
+    </ul>
+
+    <div class="md:hidden cursor-pointer" (click)="toggleMenu()">
+      <div *ngIf="!isMenuOpen">
+        <mat-icon>menu</mat-icon>
+      </div>
+      <div *ngIf="isMenuOpen">
+        <mat-icon>close</mat-icon>
+      </div>
+    </div>
+  </nav>
+
+  <div [@openClose]="menuState" class="md:hidden mt-4 flex flex-col space-y-4">
+    <span class="font-semibold tracking-wider">{{ username | titlecase }}</span>
+    <button
+      class="cursor-pointer font-bold tracking-wider bg-(--secondary-color) px-4 py-2 rounded-2xl"
+      (click)="handleAddEmployee()"
+    >
+      Add Employee
+    </button>
+
+    <button
+      class="cursor-pointer bg-red-500 px-4 py-2 rounded-2xl font-bold"
+      (click)="handleLogout()"
+    >
+      Logout
+    </button>
+  </div>
+</header>

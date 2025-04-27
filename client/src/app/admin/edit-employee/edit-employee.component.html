@@ -1,0 +1,154 @@
+<div class="p-5 mx-1 fixed top-0 left-0 z-30">
+  <button
+    class="px-4 py-2 bg-(--primary-color) cursor-pointer text-white rounded-2xl"
+    [routerLink]="['/admin/dashboard']"
+  >
+    Back
+  </button>
+</div>
+<div
+  class="lg:flex-row min-h-screen h-full flex flex-col gap-5 p-5 pt-20 lg:overflow-hidden"
+>
+  <div
+    class="lg:w-1/2 max-h-[500px] bg-(--card-bg) shadow-(--card-shadow) rounded-2xl p-5"
+  >
+    <div>
+      <h1>Edit Review</h1>
+    </div>
+    <form
+      [formGroup]="addEmployeeForm"
+      class="flex flex-col gap-4 text-white p-1"
+    >
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput type="text" formControlName="username" />
+        <mat-error
+          *ngIf="addEmployeeForm.get('username')?.hasError('required')"
+        >
+          Username is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Select Role</mat-label>
+        <mat-select
+          formControlName="role"
+          panelClass="custom-select-panel"
+          disableRipple
+        >
+          <mat-option value="employee">Employee</mat-option>
+          <mat-option value="admin">Admin</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          formControlName="email"
+          [value]="addEmployeeForm.get('email')?.value | lowercase"
+        />
+        <mat-error *ngIf="addEmployeeForm.get('email')?.hasError('required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="addEmployeeForm.get('email')?.hasError('email')">
+          Enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="addEmployeeForm.get('email')?.hasError('duplicate')">
+          Email is already registered
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          formControlName="password"
+          autocomplete="new-password"
+          matInput
+          [type]="hide() ? 'password' : 'text'"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="clickEvent($event)"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide()"
+        >
+          <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+        @if (addEmployeeForm.get('password')?.hasError('required')) {
+        <mat-error>Password is required</mat-error>
+        }
+      </mat-form-field>
+      <div class="flex justify-center items-center">
+        <button
+          class="px-10 rounded-2xl bg-(--primary-color) text-xl font-semibold hover:bg-accent-color cursor-pointer text-(--button-text) tracking-wider border-accent-color border-1 py-2"
+          (click)="onSubmit()"
+          [disabled]="addEmployeeForm.invalid"
+        >
+          submit
+        </button>
+      </div>
+    </form>
+  </div>
+  <div
+    class="lg:w-1/2 flex flex-col bg-(--card-bg) shadow-(--card-shadow) rounded-2xl p-5"
+  >
+    <h1>FeedBack From Others</h1>
+    <div class="h-full overflow-auto">
+      <div>
+        <div class="overflow-auto h-full">
+          <div
+            class="grid grid-cols-1 gap-5 my-4 mt-5 md:grid-cols-2 md:gap-y-10"
+          >
+            <div
+              class="bg-(--card-bg) w-full max-w-2xl text-[var(--text-primary)] shadow-[var(--accent-color)] border border-[var(--accent-color)] p-5 rounded-2xl transition-all duration-300"
+              *ngFor="let list of feedbackList"
+            >
+              <form class="w-full">
+                <div>
+                  <div class="flex flex-col mb-4">
+                    <mat-label>Recipient:</mat-label>
+                    <div>
+                      <span class="text-(--secondary-color)">{{
+                        list.reviewerEmail
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <mat-label>Feedback:</mat-label>
+                  <mat-form-field class="w-full">
+                    <textarea
+                      [(ngModel)]="list.review"
+                      name="feedback"
+                      matInput
+                      placeholder="Enter your review"
+                      (input)="getFeedBackValue($event)"
+                    ></textarea>
+                  </mat-form-field>
+                </div>
+              </form>
+
+              <div>
+                <button
+                  class="px-10 rounded-2xl bg-(--primary-color) text-xl font-semibold hover:bg-accent-color cursor-pointer text-(--button-text) tracking-wider border-accent-color border-1 py-2"
+                  (click)="handleUpdateFeedBack(list.reviewId || '')"
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #noAssigned>
+          <div
+            class="flex flex-col items-center justify-center h-full text-center text-gray-500"
+          >
+            <p class="text-lg">No assigned reviews yet.</p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

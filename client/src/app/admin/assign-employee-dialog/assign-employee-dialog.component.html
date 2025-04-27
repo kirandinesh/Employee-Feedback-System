@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>Assign Review</h2>
+
+<mat-dialog-content>
+  <div>
+    <div class="mb-4 flex gap-1">
+      <label for="">Reviewer:</label>
+      <span class="font-black text-(--secondary-text)">{{
+        employeeList.reviewer.username
+      }}</span>
+    </div>
+
+    <form [formGroup]="assignEmployeeForm">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Select Recipient</mat-label>
+        <mat-select
+          formControlName="email"
+          panelClass="custom-select-panel"
+          disableRipple
+        >
+          <mat-option
+            *ngFor="let employee of employeeList.recipient"
+            [value]="employee.email"
+          >
+            {{ employee.email }} ({{ employee.username }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+    <div class="mt-4">
+      <button
+        class="bg-[var(--secondary-color)] cursor-pointer px-4 py-2 text-[var(--button-text)] font-semibold tracking-widest rounded-2xl"
+        [disabled]="assignEmployeeForm.invalid"
+        (click)="handleAssign()"
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button class="cursor-pointer" mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

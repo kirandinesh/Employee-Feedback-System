@@ -1,0 +1,51 @@
+<app-header></app-header>
+<div class="px-5 py-20 min-h-screen h-full">
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-5"
+  >
+    <div
+      *ngFor="let employee of employeesList"
+      class="p-4 rounded-lg max-h-60 max-w-xs flex flex-col justify-between bg-[var(--card-bg)] shadow-[var(--card-shadow)]"
+    >
+      <div class="flex flex-col items-start space-x-4">
+        <div class="icon">
+          <mat-icon>account_circle</mat-icon>
+        </div>
+        <div>
+          <div class="text-xl text-(--primary-text) font-semibold">
+            {{ employee?.username | titlecase }}
+          </div>
+          <div class="text-sm font-semibold text-(--secondary-text)">
+            {{ employee.email }}
+          </div>
+          <div class="text-sm text-(--secondary-text)">
+            Role: {{ employee.role | lowercase }}
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 flex w-full justify-between">
+        <button
+          class="bg-red-500 cursor-pointer text-white px-5 py-2 rounded-md hover:bg-red-600"
+          (click)="onDelete(employee._id)"
+          [disabled]="isDeleting"
+        >
+          Delete
+        </button>
+        <button
+          class="bg-blue-500 cursor-pointer text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          (click)="onEdit(employee._id)"
+        >
+          Edit
+        </button>
+      </div>
+      <div class="mt-4">
+        <button
+          class="bg-green-500 w-full cursor-pointer text-white px-4 py-2 rounded-md hover:bg-green-600"
+          (click)="handleAssignReview(employee._id, employee?.username)"
+        >
+          Assign Review
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<h2 mat-dialog-title>
+  {{ employeeData?.editId ? "Update Employee" : "Add Employee" }}
+</h2>
+<mat-dialog-content>
+  <form
+    [formGroup]="addEmployeeForm"
+    class="flex flex-col gap-4 text-white p-1"
+  >
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput type="text" formControlName="username" />
+      <mat-error *ngIf="addEmployeeForm.get('username')?.hasError('required')">
+        Username is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Select Role</mat-label>
+      <mat-select
+        formControlName="role"
+        panelClass="custom-select-panel"
+        disableRipple
+      >
+        <mat-option value="employee">Employee</mat-option>
+        <mat-option value="admin">Admin</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="email"
+        formControlName="email"
+        [value]="addEmployeeForm.get('email')?.value | lowercase"
+      />
+      <mat-error *ngIf="addEmployeeForm.get('email')?.hasError('required')">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="addEmployeeForm.get('email')?.hasError('email')">
+        Enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="addEmployeeForm.get('email')?.hasError('duplicate')">
+        Email is already registered
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+        formControlName="password"
+        autocomplete="new-password"
+        matInput
+        [type]="hide() ? 'password' : 'text'"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="clickEvent($event)"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide()"
+      >
+        <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+      @if (addEmployeeForm.get('password')?.hasError('required')) {
+      <mat-error>Password is required</mat-error>
+      }
+    </mat-form-field>
+    <div class="flex justify-center items-center">
+      <button
+        class="px-10 rounded-2xl bg-(--primary-color) text-xl font-semibold hover:bg-accent-color cursor-pointer text-(--button-text) tracking-wider border-accent-color border-1 py-2"
+        (click)="onSubmit()"
+        [disabled]="addEmployeeForm.invalid"
+      >
+        submit
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

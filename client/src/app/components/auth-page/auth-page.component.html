@@ -1,0 +1,40 @@
+<div
+  class="w-full h-full flex flex-col justify-center items-center overflow-hidden bg-[var(--bg-color)] text-[var(--text-primary)]"
+>
+  <div
+    class="flex flex-col w-full h-full px-5 justify-center z-20 items-center"
+  >
+    <div>
+      <h1
+        class="text-2xl tracking-widest font-bold mb-6 text-[var(--text-primary)]"
+      >
+        Employee Review System
+      </h1>
+    </div>
+
+    <div
+      class="w-full max-w-2xl bg-[var(--card-bg)] text-[var(--text-primary)] shadow-[var(--accent-color)] border border-[var(--accent-color)] p-5 rounded-2xl transition-all duration-300"
+    >
+      <mat-tab-group
+        animationDuration="1000ms"
+        class="w-full flex justify-center"
+      >
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="mr-1">login</mat-icon>
+            <span>Login</span>
+          </ng-template>
+          <app-login />
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="mr-1">person_add</mat-icon>
+            <span>Sign Up</span>
+          </ng-template>
+          <app-registration />
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
